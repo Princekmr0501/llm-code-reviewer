@@ -24,6 +24,6 @@ export async function askllm(prompt){
     }
     )
 //taking back the response 
-const data =await respons.json()
+const data =await response.json()
 data.choices[0].message.content
 }
