@@ -1,5 +1,5 @@
-// i have to send the git repo root -not done
 // Accesing the REQUEST **select repo**
+const review_code=require("./services/git.services")
 app.get("/check", async (req, res) => {
     try {
         if (!req.query.path) {
@@ -21,14 +21,16 @@ app.get("/check", async (req, res) => {
         const results = []
         await Promise.all(items.map(async (item) => {
             const fullPath = path.join(userPath, item)
-            const itemStats = await fs.stat(fullPath)
-
-            if (!itemStats.isDirectory()) return
-
+           try{ const itemStats = await fs.stat(fullPath)
+                if (!itemStats.isDirectory()) return
+           }
+           catch {
+                return // safely ignore fs errors
+               }
             return new Promise((resolve) => {
                 execFile(
                     "git",
-                    ["rev-parse", "--is-inside-work-tree"],
+                    ["rev-parse", "--show-toplevel"],
                     { cwd: fullPath, timeout: 5000 },
                     (err, stdout) => {
                         if (!err && stdout.trim() === "true") {

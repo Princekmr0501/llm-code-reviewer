@@ -1,5 +1,4 @@
 
-//send it indside env file 
 //now make a call to the chagpt 
 
 export async function askllm(prompt){
