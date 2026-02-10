@@ -1,6 +1,14 @@
 //make a check that if output should not exceed more than 1500 words  
 
-function get_staged_diff(git_path) {
+import {execFile} from "child_process";
+
+interface GitRepoRequestBody {
+    git_path: string
+    base?: string
+    compare?: string
+}
+
+function get_staged_diff(git_path:string):Promise<string>{
     return new Promise((resolve, reject) => {
         execFile(
             "git",
@@ -14,7 +22,7 @@ function get_staged_diff(git_path) {
     })
 }
 
-function review_code(git_path, base, compare) {
+function review_code(git_path:string, base:string, compare:string):Promise<string>{
     return new Promise(async(resolve, reject) => {
 
         if (!base || !compare) {
@@ -50,7 +58,7 @@ function review_code(git_path, base, compare) {
     
 
 
-function git_validation(git_path) {
+function git_validation(git_path:string):Promise<boolean> {
     return new Promise((resolve, reject) => {
         execFile(
             "git",
@@ -68,7 +76,7 @@ function git_validation(git_path) {
 
 
 //  CHANGED: new helper to fetch latest refs
-function git_fetch(git_path) {
+function git_fetch(git_path:string):Promise<boolean> {
     return new Promise((resolve, reject) => {
         execFile(
             "git",
@@ -82,7 +90,7 @@ function git_fetch(git_path) {
     })
 }
 
-  function git_branch_exists(git_path, branch) {
+  function git_branch_exists(git_path:string, branch:string) :Promise<boolean>{
     return new Promise((resolve, reject) => {
         execFile(
             "git",

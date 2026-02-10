@@ -1,7 +1,7 @@
 
 //now make a call to the chagpt 
 
-export async function askllm(prompt){
+export async function askllm(prompt:string): Promise <string> {
     //take the key 
     const response =await fetch("https://api.openai.com/v1/chat/completions",{
     //Post the request :Headers+ body '
@@ -23,6 +23,10 @@ export async function askllm(prompt){
     }
     )
 //taking back the response 
-const data =await response.json()
-data.choices[0].message.content
+const data = (await response.json()) as {
+        choices: { message: { role: string; content: string } }[];
+    };
+
+    return data.choices[0]?.message?.content ?? "No Content";
+
 }
