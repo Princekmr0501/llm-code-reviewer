@@ -17,16 +17,24 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/app.js",
-    "dev": "nodemon --watch src --ext ts,json --exec ts-node-esm src/services/app.ts",
-    "build": "tsc"
+    "dev": "nodemon --exec node --loader ts-node/esm src/app.ts",
+    "build": "tsc",
+     "lint": "eslint src --ext .ts,.js",
+     "lint:fix": "eslint src --ext .ts,.js --fix"
   },
   "dependencies": {
     "dotenv": "^17.2.3",
     "express": "^5.2.1"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/express": "^5.0.6",
     "@types/node": "^25.2.2",
+    "@typescript-eslint/eslint-plugin": "^8.55.0",
+    "@typescript-eslint/parser": "^8.55.0",
+    "eslint": "^9.39.2",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^17.3.0",
     "nodemon": "^3.1.11",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
