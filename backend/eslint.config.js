@@ -16,7 +16,7 @@ import tsParser from "@typescript-eslint/parser";
 export default defineConfig([
   // TypeScript files
   {
-    files: ["**/*.ts", "**/*.tsx"],
+    files: ["**/*.ts", "**/*.tsx", "**/*.json"],
     plugins: { "@typescript-eslint": tsPlugin },
     languageOptions: {
       parser: tsParser,
@@ -31,7 +31,7 @@ export default defineConfig([
       "@typescript-eslint/no-explicit-any": "warn",
 
       // Auto-fixable formatting rules
-      "semi": ["error", "always"],                   // require semicolons
+      "semi": ["error", "never"],                   // avoid semicolons
       "quotes": ["error", "single"],                // use single quotes
       "comma-dangle": ["error", "never"],           // no trailing commas
       "indent": ["error", 4],                        // 4 spaces
