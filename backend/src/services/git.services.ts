@@ -1,6 +1,6 @@
 //make a check that if output should not exceed more than 1500 words  
 
-import { execFile } from 'child_process';
+import { execFile } from 'child_process'
 
 //interface GitRepoRequestBody {
 //  git_path: string
@@ -15,44 +15,44 @@ export function get_staged_diff(git_path: string): Promise<string> {
             ['diff', '--staged'],
             { cwd: git_path, timeout: 5000 },
             (err, stdout) => {
-                if (err) return reject(err);
-                resolve(stdout);
+                if (err) return reject(err)
+                resolve(stdout)
             }
-        );
-    });
+        )
+    })
 }
 
-export function review_code(git_path: string, base: string, compare: string): Promise<string> {
+export function get_diff_between_branches(git_path: string, base: string, compare: string): Promise<string> {
     return new Promise(async(resolve, reject) => {
 
         if (!base || !compare) {
-            return reject(new Error('base and compare branch required'));
+            return reject(new Error('base and compare branch required'))
         }
         //checking if the base and compare branches exist 
         try {
             //  CHANGED: fetch latest branches
-            await git_fetch(git_path);
+            await git_fetch(git_path)
 
             // CHANGED: verify base branch exists
-            await git_branch_exists(git_path, base);
+            await git_branch_exists(git_path, base)
 
             //  CHANGED: verify compare branch exists
-            await git_branch_exists(git_path, compare);
+            await git_branch_exists(git_path, compare)
 
             execFile(
                 'git',
                 ['diff', `${base}..${compare}`],
                 { cwd: git_path, timeout: 5000 },
                 (err, stdout) => {
-                    if (err) return reject(err);
-                    resolve(stdout);
+                    if (err) return reject(err)
+                    resolve(stdout)
                 }
-            );
+            )
         }
         catch (err) {
-            reject(err);
+            reject(err)
         }
-    });
+    })
 }
 
 export function git_validation(git_path: string): Promise<boolean> {
@@ -63,12 +63,12 @@ export function git_validation(git_path: string): Promise<boolean> {
             { cwd: git_path, timeout: 5000 },
             (err) => {
                 if (err) {
-                    return reject(new Error('Not a git repo'));
+                    return reject(new Error('Not a git repo'))
                 }
-                resolve(true);
+                resolve(true)
             }
-        );
-    });
+        )
+    })
 }
 
 //  CHANGED: new helper to fetch latest refs
@@ -79,11 +79,11 @@ function git_fetch(git_path: string): Promise<boolean> {
             ['fetch', '--all'],
             { cwd: git_path, timeout: 5000 },
             (err) => {
-                if (err) return reject(new Error('Git fetch failed'));
-                resolve(true);
+                if (err) return reject(new Error('Git fetch failed'))
+                resolve(true)
             }
-        );
-    });
+        )
+    })
 }
 
 function git_branch_exists(git_path: string, branch: string): Promise<boolean> {
@@ -94,10 +94,10 @@ function git_branch_exists(git_path: string, branch: string): Promise<boolean> {
             { cwd: git_path, timeout: 5000 },
             (err) => {
                 if (err) {
-                    return reject(new Error(`Branch not found: ${branch}`));
+                    return reject(new Error(`Branch not found: ${branch}`))
                 }
-                resolve(true);
+                resolve(true)
             }
-        );
-    });
+        )
+    })
 }

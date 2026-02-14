@@ -1,16 +1,21 @@
+import express from 'express'
+import dotenv from 'dotenv'
 
-import express, { Application } from 'express';
-import dotenv from 'dotenv';
+// routers
+import { healthRouter } from './routes/health.route.ts'
+import { analyzeRouter } from './routes/analyze.route.ts'
 
-dotenv.config({ path: 'llmkey.env' });
 
-const app: Application = express();
+dotenv.config({ path: '.env' })
 
-app.use(express.json());
+const app = express()
 
-const port: number = 8080;
+app.use(express.json())
+app.use(healthRouter)
+app.use(analyzeRouter)
+
+const port = 8080
 
 app.listen(port, () => {
-    console.log('Working on the Server');
-});
-
+    console.log(`Server started on port ${port}`)
+})

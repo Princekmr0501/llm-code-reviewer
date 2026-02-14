@@ -17,10 +17,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/app.js",
-    "dev": "nodemon --exec node --loader ts-node/esm src/app.ts",
+    "dev": "nodemon src/app.ts",
     "build": "tsc",
-     "lint": "eslint src --ext .ts,.js",
-     "lint:fix": "eslint src --ext .ts,.js --fix"
+    "lint": "eslint src --ext .ts,.js",
+    "lint:fix": "eslint src --ext .ts,.js --fix"
   },
   "dependencies": {
     "dotenv": "^17.2.3",
